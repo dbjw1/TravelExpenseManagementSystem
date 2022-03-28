@@ -14,19 +14,19 @@ public class MenuManager{
 			num=input.nextInt();
 			switch(num) {
 				case 1:
-					addexpense();
+					addExpense();
 					break;
 				case 2:
-					deleteexpense();
+					deleteExpense();
 					break;
 				case 3:
-					editexpense();
+					editExpense();
 					break;
 				case 4:
-					viewexpense();
+					viewExpense();
 					break;
 				case 5:
-					showamenu();
+					showMenu();
 					break;
 				case 6:
 					exit();
@@ -34,7 +34,7 @@ public class MenuManager{
 			}
 		}
 	}
-	public static void addexpense(){
+	public static void addExpense(){
 		Scanner input = new Scanner(System.in);
 		System.out.print("Date(MMDD) :");
 		String date=input.next();
@@ -49,16 +49,16 @@ public class MenuManager{
 		des=input.nextLine();
 		System.out.println();
 	}
-	public static void deleteexpense(){
+	public static void deleteExpense(){
 		
 	}
-	public static void editexpense(){
+	public static void editExpense(){
 		
 	}
-	public static void viewexpense(){
+	public static void viewExpense(){
 
 	}
-	public static void showamenu(){
+	public static void showMenu(){
 		
 	}
 	public static void exit(){
