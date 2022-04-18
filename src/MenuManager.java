@@ -5,15 +5,15 @@ public class MenuManager{
 		Scanner input = new Scanner(System.in);
 		ExpenseManager eManager=new ExpenseManager(input); 
 		
-		int num=0;
+		int num=-1;
 		while(num!=5) {
-			System.out.println("#Menu");
+			System.out.println("###Menu###");
 			System.out.println("1. Add Expense");
 			System.out.println("2. Delete Expense");
 			System.out.println("3. Edit Expense");
-			System.out.println("4. View Expense");
+			System.out.println("4. View Expenses");
 			System.out.println("5. Exit");
-			System.out.println("#Select one number between 1-5");
+			System.out.println("###Select one number between 1-6");
 			num=input.nextInt();
 			switch(num) {
 				case 1:
@@ -26,7 +26,7 @@ public class MenuManager{
 					eManager.editExpense();
 					break;
 				case 4:
-					eManager.viewExpense();
+					eManager.viewExpenses();
 					break;
 			}
 		}
