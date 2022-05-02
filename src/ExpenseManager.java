@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Expense.Expense;
-import Expense.TransportationExpense;
+import Expense.Transportation;
 
 public class ExpenseManager {
 	ArrayList<Expense> expenses=new ArrayList<Expense>();	
@@ -17,17 +17,17 @@ public class ExpenseManager {
 		Expense expense;
 		while(kind!=1&&kind!=2) {
 			System.out.println("Select Expense Kind between 1 and 2");
-			System.out.println("1 for Food");
-			System.out.println("2 for Transportation");
+			System.out.println("1 for Transportation");
+			System.out.println("2 for Other");
 			kind=input.nextInt();
 			switch(kind) {
 				case 1:
-					expense=new Expense();
+					expense=new Transportation();
 					expense.getUserInput(input);
 					expenses.add(expense);
 					break;
 				case 2:
-					expense=new TransportationExpense();
+					expense=new Expense();
 					expense.getUserInput(input);
 					expenses.add(expense);
 					break;
