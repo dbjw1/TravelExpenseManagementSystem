@@ -2,11 +2,14 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Expense.Expense;
+import Expense.ExpenseInput;
+import Expense.ExpenseKind;
+import Expense.Food;
+import Expense.Lodging;
 import Expense.Transportation;
 
 public class ExpenseManager {
-	ArrayList<Expense> expenses=new ArrayList<Expense>();	
+	ArrayList<ExpenseInput> expenses=new ArrayList<ExpenseInput>();	
 	Scanner input;
 	ExpenseManager(Scanner input){
 		this.input=input;
@@ -14,23 +17,28 @@ public class ExpenseManager {
 	
 	public void addExpense(){
 		int kind=0;
-		Expense expense;
+		ExpenseInput expenseInput;
 		while(kind!=1&&kind!=2) {
 			System.out.println("Select Expense Kind between 1 and 2");
 			System.out.println("1 for Transportation");
-			System.out.println("2 for Other");
+			System.out.println("2 for Food");
+			System.out.println("3 for Lodging");
 			kind=input.nextInt();
 			switch(kind) {
 				case 1:
-					expense=new Transportation();
-					expense.getUserInput(input);
-					expenses.add(expense);
+					expenseInput=new Transportation(ExpenseKind.Transportation);
+					expenseInput.getUserInput(input);
+					expenses.add(expenseInput);
 					break;
 				case 2:
-					expense=new Expense();
-					expense.getUserInput(input);
-					expenses.add(expense);
+					expenseInput=new Food(ExpenseKind.Food);
+					expenseInput.getUserInput(input);
+					expenses.add(expenseInput);
 					break;
+				case 3:
+					expenseInput=new Lodging(ExpenseKind.Lodging);
+					expenseInput.getUserInput(input);
+					expenses.add(expenseInput);
 			}
 		}
 	}
@@ -57,8 +65,8 @@ public class ExpenseManager {
 		System.out.print("ID : ");
 		int id=input.nextInt();
 		for(int i=0;i<expenses.size();i++) {
-			Expense expense = expenses.get(i);
-			if(expense.getId()==id) {
+			ExpenseInput expenseInput = expenses.get(i);
+			if(expenseInput.getId()==id) {
 				int num=-1;
 				while(num!=5) {
 					System.out.println("#Expense Info Edit Menu");
@@ -73,33 +81,32 @@ public class ExpenseManager {
 						case 1:
 							System.out.print("ID : ");
 							int inpId=input.nextInt();
-							expense.setId(inpId);
+							expenseInput.setId(inpId);
 							break;
 						case 2:
 							System.out.print("Date(MMDD) :");
 							String date=input.next();
-							expense.setDate(date);
+							expenseInput.setDate(date);
 							break;
 						case 3:
 							System.out.print("Expender : ");
 							String expender=input.next();
-							expense.setExpender(expender);
+							expenseInput.setExpender(expender);
 							break;
 						case 4:
 							System.out.print("Amount : ");
 							int amount=input.nextInt();
-							expense.setAmount(amount);
+							expenseInput.setAmount(amount);
 							break;
-						}//switch case
-					}//while
+						}
+					}
 					break;
-				}//if
+				}
 				System.out.println("expense data to be edited is "+id);
-			}//for
+			}
 		}
 	public void viewExpenses(){
-//		System.out.print("ID : ");
-//		int id=input.nextInt();
+		System.out.print("-----");
 		for(int i=0;i<expenses.size();i++) {
 			expenses.get(i).printInfo();
  		}
