@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Expense.ExpenseInput;
@@ -18,86 +19,90 @@ public class ExpenseManager {
 	public void addExpense(){
 		int kind=0;
 		ExpenseInput expenseInput;
-		while(kind!=1&&kind!=2) {
-			System.out.println("Select Expense Kind between 1 and 2");
-			System.out.println("1 for Transportation");
-			System.out.println("2 for Food");
-			System.out.println("3 for Lodging");
-			kind=input.nextInt();
-			switch(kind) {
-				case 1:
-					expenseInput=new Transportation(ExpenseKind.Transportation);
-					expenseInput.getUserInput(input);
-					expenses.add(expenseInput);
-					break;
-				case 2:
-					expenseInput=new Food(ExpenseKind.Food);
-					expenseInput.getUserInput(input);
-					expenses.add(expenseInput);
-					break;
-				case 3:
-					expenseInput=new Lodging(ExpenseKind.Lodging);
-					expenseInput.getUserInput(input);
-					expenses.add(expenseInput);
+		while(kind<1||kind>3) {
+			try {
+				System.out.println("Select Expense Kind between 1 and 3");
+				System.out.println("1 for Transportation");
+				System.out.println("2 for Food");
+				System.out.println("3 for Lodging");
+				kind=input.nextInt();
+				switch(kind) {
+					case 1:
+						expenseInput=new Transportation(ExpenseKind.Transportation);
+						expenseInput.getUserInput(input);
+						expenses.add(expenseInput);
+						break;
+					case 2:
+						expenseInput=new Food(ExpenseKind.Food);
+						expenseInput.getUserInput(input);
+						expenses.add(expenseInput);
+						break;
+					case 3:
+						expenseInput=new Lodging(ExpenseKind.Lodging);
+						expenseInput.getUserInput(input);
+						expenses.add(expenseInput);
+				}
+			} catch(InputMismatchException e) {
+				System.out.println("Please put an integer between 1 and 3!");
+				if(input.hasNext()) {
+					input.next();
+				}
+				kind=-1;
 			}
 		}
 	}
 	public void deleteExpense(){
 		System.out.print("ID : ");
-		int id=input.nextInt();
+		int expenseId=input.nextInt();
+		int index=findIndex(expenseId);
+		removefromStudents(index,expenseId);
+	}
+	public int findIndex(int expenseId) {
 		int index=-1;
 		for(int i=0;i<expenses.size();i++) {
-			if(expenses.get(i).getId()==id) {
+			if(expenses.get(i).getId()==expenseId) {
 				index = i;
 				break;
 			}
 		}
+		return index;
+	}
+	public int removefromStudents(int index,int expenseId) {
 		if(index>=0) {
 			expenses.remove(index);
-			System.out.println("expense id : "+id+" is deleted"); 
+			System.out.println("expense Id : "+expenseId+" is deleted"); 
+			return 1;
 		}
 		else {
 			System.out.println("no expense data");
-			return;
+			return -1;
 		}
 	}
 	public void editExpense(){
 		System.out.print("ID : ");
 		int id=input.nextInt();
 		for(int i=0;i<expenses.size();i++) {
-			ExpenseInput expenseInput = expenses.get(i);
-			if(expenseInput.getId()==id) {
+			ExpenseInput expense = expenses.get(i);
+			if(expense.getId()==id) {
 				int num=-1;
 				while(num!=5) {
-					System.out.println("#Expense Info Edit Menu");
-					System.out.println("1. Edit Id");
-					System.out.println("2. Edit Date");
-					System.out.println("3. Edit Expender");
-					System.out.println("4. Edit Amount");
-					System.out.println("5. Exit");
-					System.out.println("Select one number between 1 - 6:");
+					showEditMenu();
 					num=input.nextInt();
 					switch(num) {
 						case 1:
-							System.out.print("ID : ");
-							int inpId=input.nextInt();
-							expenseInput.setId(inpId);
+							expense.setExpenseID(input);
 							break;
 						case 2:
-							System.out.print("Date(MMDD) :");
-							String date=input.next();
-							expenseInput.setDate(date);
+							expense.setExpenseDate(input);
 							break;
 						case 3:
-							System.out.print("Expender : ");
-							String expender=input.next();
-							expenseInput.setExpender(expender);
+							expense.setExpenseExpender(input);
 							break;
 						case 4:
-							System.out.print("Amount : ");
-							int amount=input.nextInt();
-							expenseInput.setAmount(amount);
+							expense.setExpenseAmount(input);
 							break;
+						default:
+							continue;
 						}
 					}
 					break;
@@ -110,5 +115,15 @@ public class ExpenseManager {
 		for(int i=0;i<expenses.size();i++) {
 			expenses.get(i).printInfo();
  		}
+	}
+
+	public void showEditMenu() {
+		System.out.println("#Expense Info Edit Menu");
+		System.out.println("1. Edit Id");
+		System.out.println("2. Edit Date");
+		System.out.println("3. Edit Expender");
+		System.out.println("4. Edit Amount");
+		System.out.println("5. Exit");
+		System.out.println("Select one number between 1 - 6:");
 	}
 }
