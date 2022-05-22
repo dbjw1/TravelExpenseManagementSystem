@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -9,9 +10,13 @@ import Expense.Food;
 import Expense.Lodging;
 import Expense.Transportation;
 
-public class ExpenseManager {
+public class ExpenseManager implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	ArrayList<ExpenseInput> expenses=new ArrayList<ExpenseInput>();	
-	Scanner input;
+	transient Scanner input;
 	ExpenseManager(Scanner input){
 		this.input=input;
 	}
