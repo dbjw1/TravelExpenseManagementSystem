@@ -1,2 +1,2 @@
-5월 23, 2022 5:57:00 오전 log.EventLogger log
+6월 07, 2022 10:42:15 오후 log.EventLogger log
 정보: add expense
